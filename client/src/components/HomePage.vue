@@ -12,8 +12,8 @@
           <!-- Form for input -->
           <b-form @submit="onSubmit" v-if="show">
 
-            <b-form-group id="input-group-1" label="Zip Code:" label-for="input-1">
-              <b-form-input id="input-1" v-model="form.zip" type="text" required placeholder="Enter zip code"></b-form-input>
+            <b-form-group id="input-group-1" label="Zip Code:" label-for="input1">
+              <b-form-input id="input1" v-model="form.zip" type="text" required placeholder="Enter zip code"></b-form-input>
             </b-form-group>
 
             <b-form-group id="input-group-2" label="City Name:" label-for="input-2">
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HomePage',
   data () {
@@ -45,7 +47,14 @@ export default {
   methods: {
     onSubmit (evt) {
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      // const route = {
+      //   name: 'localWeather'
+      // }
+      // alert(JSON.stringify(this.form))
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${this.form.zip},us&appid=d130ff34b8fd1e2aea6c419d45ae02c8`)
+        .then(response => {
+          console.log(response.data)
+        })
     }
   }
 }

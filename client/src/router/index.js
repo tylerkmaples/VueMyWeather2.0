@@ -11,5 +11,10 @@ export default new Router({
       name: 'HomePage',
       component: HomePage
     }
+    // {
+    //   path: '/localWeather',
+    //   name: 'localWeather',
+    //   component: LocalWeather
+    // }
   ]
 })
