@@ -1,7 +1,12 @@
 import axios from 'axios'
 
 export default() => {
-    return axios.get({
-        baseURL: `http://localhost:8081/`
-    })
+  return axios.create({
+    baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+    withCredentials: false,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
 }

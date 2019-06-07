@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/components/HomePage'
+import LocalWeather from '@/components/LocalWeather'
 
 Vue.use(Router)
 
@@ -10,11 +11,11 @@ export default new Router({
       path: '/',
       name: 'HomePage',
       component: HomePage
+    },
+    {
+      path: '/local',
+      name: 'localWeather',
+      component: LocalWeather
     }
-    // {
-    //   path: '/localWeather',
-    //   name: 'localWeather',
-    //   component: LocalWeather
-    // }
   ]
 })

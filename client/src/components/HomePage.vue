@@ -10,20 +10,15 @@
         <b-col sm="12">
 
           <!-- Form for input -->
-          <b-form @submit="onSubmit" v-if="show">
+          <b-form @submit="getWeather" v-if="show">
 
             <b-form-group id="input-group-1" label="Zip Code:" label-for="input1">
-              <b-form-input id="input1" v-model="form.zip" type="text" required placeholder="Enter zip code"></b-form-input>
-            </b-form-group>
-
-            <b-form-group id="input-group-2" label="City Name:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.city" required placeholder="Enter City"></b-form-input>
+              <b-form-input id="input1" v-on:keydown.enter="getWeather" v-model="form.zip" type="text" required placeholder="Enter zip code"></b-form-input>
             </b-form-group>
 
             <b-button type="submit" variant="primary">Submit</b-button>
 
           </b-form>
-
         </b-col>
       </b-row>
     </b-container>
@@ -31,30 +26,31 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+import WeatherService from '@/services/WeatherService'
 export default {
   name: 'HomePage',
   data () {
     return {
       form: {
-        zip: '',
-        city: ''
+        zip: ''
       },
-      show: true
+      show: true,
+      localWeatherData: ''
     }
   },
   methods: {
-    onSubmit (evt) {
+    async getWeather (evt) {
       evt.preventDefault()
-      // const route = {
-      //   name: 'localWeather'
-      // }
-      // alert(JSON.stringify(this.form))
-      axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${this.form.zip},us&appid=d130ff34b8fd1e2aea6c419d45ae02c8`)
-        .then(response => {
-          console.log(response.data)
-        })
+      if (this.form.zip.length !== 5) {
+        alert('ntr zip pls')
+        return false
+      }
+      const response = await WeatherService.getWeather({ location: this.form.zip })
+      let dataResp = response.data
+      this.localWeatherData = dataResp
+      this.$store.commit('addWeather', this.localWeatherData)
+      console.log(this.localWeatherData)
+      this.$router.push({ name: 'localWeather' })
     }
   }
 }
