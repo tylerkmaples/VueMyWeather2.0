@@ -35,21 +35,24 @@ export default {
         zip: ''
       },
       show: true,
-      localWeatherData: ''
+      localWeatherData: '',
+      localForecast: ''
     }
   },
   methods: {
     async getWeather (evt) {
       evt.preventDefault()
       if (this.form.zip.length !== 5) {
-        alert('ntr zip pls')
         return false
       }
-      const response = await WeatherService.getWeather({ location: this.form.zip })
-      let dataResp = response.data
-      this.localWeatherData = dataResp
+      const weatherResponse = await WeatherService.getWeather({ location: this.form.zip })
+      const forecastResponse = await WeatherService.getForecast({ location: this.form.zip })
+      let weatherDataResp = weatherResponse.data
+      let forecastDataResp = forecastResponse.data
+      this.localWeatherData = weatherDataResp
+      this.localForecast = forecastDataResp
       this.$store.commit('addWeather', this.localWeatherData)
-      console.log(this.localWeatherData)
+      this.$store.commit('addForecast', this.localForecast)
       this.$router.push({ name: 'localWeather' })
     }
   }

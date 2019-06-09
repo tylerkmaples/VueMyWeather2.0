@@ -6,12 +6,17 @@ Vue.use(Vuex)
 export default new Vuex.Store(
   {
     state: {
-      currentWeather: []
+      currentWeather: [],
+      currentForecast: []
     },
     mutations: {
       addWeather (state, weather) {
         state.currentWeather.unshift(weather)
         console.log(state.currentWeather)
+      },
+      addForecast (state, forecast) {
+        state.currentForecast.unshift(forecast)
+        console.log(state.currentForecast)
       }
     }
   }
